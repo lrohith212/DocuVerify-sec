@@ -73,6 +73,20 @@ A production-ready, full-stack web application for comprehensive document forens
 
 ---
 
+## 📝 Future Enhancements
+
+- [ ] PDF report generation with charts
+- [ ] Blockchain-based document validation
+- [ ] Machine learning model for tampering detection
+- [ ] Multi-language OCR support
+- [ ] Real-time collaborative analysis
+- [ ] Integration with threat intelligence feeds
+- [ ] WebRTC for secure document transmission
+- [ ] Custom threat rules engine
+- [ ] Historical comparison database
+- [ ] Mobile app (React Native)
+
+---
 ## 📁 Project Structure
 
 ```
@@ -395,22 +409,7 @@ def calculate_trust_score(cyber_result, visual_result, metadata_result, semantic
 3. **GPU Acceleration**: Enable CUDA for EasyOCR if available
 4. **Lazy Loading**: Load images on-demand in frontend
 
----
 
-## 📝 Future Enhancements
-
-- [ ] PDF report generation with charts
-- [ ] Blockchain-based document validation
-- [ ] Machine learning model for tampering detection
-- [ ] Multi-language OCR support
-- [ ] Real-time collaborative analysis
-- [ ] Integration with threat intelligence feeds
-- [ ] WebRTC for secure document transmission
-- [ ] Custom threat rules engine
-- [ ] Historical comparison database
-- [ ] Mobile app (React Native)
-
----
 
 ## 📄 License
 
@@ -418,33 +417,5 @@ This project is provided as-is for educational and forensic analysis purposes.
 
 ---
 
-## 🤝 Contributing
 
-Contributions welcome! Areas for improvement:
-- Additional forensic techniques
-- Performance optimization
-- UI/UX enhancements
-- Test coverage
-- Documentation
 
----
-
-## 📞 Support
-
-For issues or questions:
-1. Check the troubleshooting section
-2. Review API documentation above
-3. Check browser console for frontend errors
-4. Examine Flask logs for backend issues
-
----
-
-## ⚖️ Disclaimer
-
-DocuVerify-Sec is a forensic analysis tool intended for authorized document verification only. Users are responsible for ensuring they have proper authorization to analyze documents. The tool provides probabilistic analysis and should not be relied upon as the sole basis for critical decisions affecting legal, financial, or security matters. Always conduct human review alongside automated analysis results.
-
----
-
-**Version**: 1.0.0  
-**Last Updated**: January 2024  
-**Author**: Security Forensics Team
