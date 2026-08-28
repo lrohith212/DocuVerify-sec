@@ -3,11 +3,9 @@
 > **Hackathon Finalist Submission** > An automated, multi-layered digital forensic engine designed to detect document manipulation, AI-generated alterations, mathematical invoice inconsistencies, and embedded PDF threats.
 
 
-## Dashboard Overview & Forensic Visuals
+## Overview & Forensic Visuals
 
 | ELA Forensic Heatmap | AI Noise Variance Analysis | Semantic Audit Dashboard |
-| :---: | :---: | :---: |
-| ![ELA Heatmap](docs/screenshots/ela_heatmap.png) | ![Noise Variance](docs/screenshots/noise_variance.png) | ![Dashboard](docs/screenshots/dashboard.png) |
 
 
 
