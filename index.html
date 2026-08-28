@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>DocuVerify - Security Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        
+                        "primary-container": "#eff6ff", 
+                        "primary": "#2563eb",           
+                        "secondary": "#10b981",      
+                        "error": "#ef4444",             
+                        "surface": "#ffffff",           
+                        "surface-container": "#f8fafc", 
+                        "surface-container-low": "#ffffff",
+                        "surface-container-highest": "#f1f5f9", 
+                        "background": "#f3f4f6",        
+                        "on-surface": "#1e293b",        
+                        "on-surface-variant": "#475569",
+                        "outline": "#94a3b8",           
+                        "outline-variant": "#e2e8f0"    
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+    
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-black\/40, .bg-black\/50, .bg-black\/30 {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+            color: #334155 !important;
+        }
+
+        .border-white\/5, .border-white\/10 {
+            border-color: #e2e8f0 !important;
+        }
+        
+        .bg-white\/5 {
+            background-color: #f1f5f9 !important;
+        }
+        
+        circle[stroke="rgba(255,255,255,0.05)"] {
+            stroke: #e2e8f0; 
+        }
+
+        .tab-button {
+            color: #64748b !important;
+            background-color: transparent !important;
+            border: 1px solid transparent !important;
+            box-shadow: none !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button:hover {
+            color: #0f172a !important;
+            background-color: #f1f5f9 !important;
+        }
+        
+        .tab-button.active {
+            color: #2563eb !important;
+            background-color: #eff6ff !important;
+            border-color: #bfdbfe !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white border-b border-gray-200 shadow-sm">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-2xl">policy</span>
+                <span class="text-xl font-bold text-gray-900 tracking-tight">DocuVerify</span>
+            </div>
+            <div class="hidden md:flex items-center gap-1 h-full pt-1">
+                <a class="h-full flex items-center px-4 text-sm font-semibold text-primary border-b-2 border-primary" href="#">Dashboard</a>
+                <a class="h-full flex items-center px-4 text-sm font-medium text-gray-500 hover:text-gray-900" href="#">History</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 border-l border-gray-200 pl-4">
+                <div class="flex flex-col items-center">
+                    <span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+                    <span class="text-[10px] text-gray-500 font-medium">System Online</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 z-40 bg-white border-r border-gray-200">
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+                </div>
+                <div>
+                    <h2 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Workspace</h2>
+                    <p class="text-xs text-green-600 mt-1 flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        Active Session
+                    </p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 py-4 px-3 space-y-1">
+            <a class="flex items-center gap-3 bg-blue-50 text-primary px-3 py-2.5 rounded-md text-sm font-medium" href="#">
+                <span class="material-symbols-outlined text-[20px]">grid_view</span> Overview
+            </a>
+            <a class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-md text-sm font-medium transition-colors" href="#">
+                <span class="material-symbols-outlined text-[20px]">folder</span> Archives
+            </a>
+            <a class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-md text-sm font-medium transition-colors" href="#">
+                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="ml-64 mt-16 p-8 min-h-[calc(100vh-64px)]">
+        <div class="max-w-[1200px] mx-auto">
+            
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Forensic Audit Scan</h1>
+                <p class="text-sm text-gray-500 mt-1">Upload files for standard compliance and manipulation checks.</p>
+            </div>
+
+            <div id="errorBox" class="hidden mb-6 p-4 rounded-md bg-red-50 border border-red-200 text-red-700 text-sm font-medium"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div id="uploadZone" class="bg-white rounded-lg shadow-sm border-2 border-dashed border-gray-300 p-10 h-full flex flex-col justify-center items-center cursor-pointer hover:border-primary hover:bg-blue-50/50 transition-all">
+                        <input type="file" id="fileInput" class="hidden" accept=".pdf,.png,.jpg,.jpeg">
+                        
+                        <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-primary">
+                            <span class="material-symbols-outlined text-3xl">cloud_upload</span>
+                        </div>
+                        <h2 class="text-lg font-semibold text-gray-900 mb-1">Click to upload or drag and drop</h2>
+                        <p class="text-sm text-gray-500" id="uploadStatusText">Supported formats: PDF, PNG, JPG (Max 10MB)</p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 h-full flex flex-col relative">
+                        <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                            <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Trust Score</h3>
+                            <span class="material-symbols-outlined text-gray-400">info</span>
+                        </div>
+                        
+                        <div class="flex-1 flex flex-col items-center justify-center">
+                            <div class="relative w-40 h-40 flex items-center justify-center mb-4">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" fill="none" r="45" stroke="#e2e8f0" stroke-width="8"></circle>
+                                    <circle id="scoreArc" class="text-gray-300 transition-all duration-1000" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="283" stroke-dashoffset="283" stroke-width="8" stroke-linecap="round"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                    <span id="scoreValue" class="text-3xl font-bold text-gray-900">0<span class="text-lg">%</span></span>
+                                    <span id="scanStatus" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Awaiting</span>
+                                </div>
+                            </div>
+                            <div id="scoreCategory" class="hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultsContainer" class="hidden mt-8">
+                
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 border-l-4 border-l-primary p-6 mb-6">
+                    <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">summarize</span> Executive Summary
+                    </h3>
+                    <div id="executiveSummary" class="space-y-2 text-sm text-gray-600 leading-relaxed"></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6">
+                    <div class="flex flex-wrap gap-2 px-4 pt-4 border-b border-gray-100">
+                        <button class="tab-button active pb-3 px-4 text-sm font-medium border-b-2" data-target="comparison">Visual Comparison</button>
+                        <button class="tab-button pb-3 px-4 text-sm font-medium border-b-2" data-target="threats">Cyber Threats</button>
+                        <button class="tab-button pb-3 px-4 text-sm font-medium border-b-2" data-target="metadata">Metadata</button>
+                        <button class="tab-button pb-3 px-4 text-sm font-medium border-b-2" data-target="audit">Semantic Audit</button>
+                        <button class="tab-button pb-3 px-4 text-sm font-medium border-b-2" data-target="ai_detection">AI Detection</button>
+                    </div>
+
+                    <div class="p-6 bg-gray-50/50">
+                        <div id="comparison" class="tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
+                                    <p class="text-xs font-bold text-gray-500 uppercase mb-2 px-2">Original Document</p>
+                                    <img id="originalImage" class="w-full rounded object-contain max-h-[400px] border border-gray-100" style="display:none;" />
+                                    <div id="noImageMessage" class="h-48 flex flex-col items-center justify-center text-gray-400">
+                                        <span class="material-symbols-outlined text-3xl mb-2">image_not_supported</span>
+                                        <span class="text-sm font-medium">No preview available</span>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
+                                    <p class="text-xs font-bold text-red-500 uppercase mb-2 px-2">Forensic Heatmap (ELA)</p>
+                                    <img id="elaImage" class="w-full rounded object-contain max-h-[400px] border border-gray-100" style="display:none;" />
+                                    <div id="noELAMessage" class="h-48 flex flex-col items-center justify-center text-gray-400">
+                                        <span class="material-symbols-outlined text-3xl mb-2">blur_off</span>
+                                        <span class="text-sm font-medium">No heatmap required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="elaDetailsCard" class="hidden mt-6 p-4 bg-white rounded-lg border border-gray-200 shadow-sm text-sm text-gray-600">
+                                <h4 class="text-primary font-bold uppercase tracking-wider mb-2 text-xs">Analysis Details</h4>
+                                <div id="elaDetails" class="space-y-1"></div>
+                            </div>
+                        </div>
+
+                        <div id="threats" class="tab-content hidden">
+                            <div id="threatsContent" class="space-y-4"></div>
+                        </div>
+
+                        <div id="metadata" class="tab-content hidden">
+                            <div id="metadataContent" class="space-y-2 text-sm text-gray-600"></div>
+                        </div>
+
+                        <div id="audit" class="tab-content hidden">
+                            <div id="auditContent" class="space-y-4 text-sm text-gray-600"></div>
+                        </div>
+
+                        <div id="ai_detection" class="tab-content hidden">
+                            <div id="aiContent" class="space-y-4 text-sm text-gray-600"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-right">
+                    <button id="exportJsonBtn" class="px-5 py-2.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 transition-colors inline-flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">download</span> Export Final Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        
+        const API_URL = '/api';
+        let currentAnalysis = null;
+        
+        
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadStatusText = document.getElementById('uploadStatusText');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const errorBox = document.getElementById('errorBox');
+        
+        
+        uploadZone.addEventListener('click', () => fileInput.click());
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('border-primary');
+        });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('border-primary'));
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('border-primary');
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileUpload();
+            }
+        });
+        fileInput.addEventListener('change', handleFileUpload);
+        
+        
+        async function handleFileUpload() {
+            const file = fileInput.files[0];
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            hideError();
+            resultsContainer.classList.add('hidden');
+            uploadStatusText.textContent = "Analyzing document... Please wait.";
+            document.getElementById('scanStatus').textContent = 'SCANNING...';
+            document.getElementById('scanStatus').classList.add('animate-pulse', 'text-primary');
+            
+            try {
+                const response = await fetch(`${API_URL}/analyze`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server returned status ${response.status}`);
+                }
+                
+                currentAnalysis = await response.json();
+                
+                if(currentAnalysis.error) {
+                    throw new Error(currentAnalysis.error);
+                }
+
+                displayResults(currentAnalysis);
+            } catch (error) {
+                showError(`Analysis Error: ${error.message}`);
+                document.getElementById('scanStatus').textContent = 'FAILED';
+                document.getElementById('scanStatus').classList.remove('text-primary');
+            } finally {
+                uploadStatusText.textContent = "Drag & drop or click to browse (PDF, PNG, JPG)";
+                document.getElementById('scanStatus').classList.remove('animate-pulse');
+            }
+        }
+        
+        
+        function displayResults(analysis) {
+            resultsContainer.classList.remove('hidden');
+            
+            
+            const trustScore = analysis.trust_score || { score: 0 };
+            const analyses = analysis.analyses || {};
+            
+            updateScoreGauge(trustScore.score);
+            updateExecutiveSummary(analysis.executive_summary);
+            updateVisualComparison(analyses.visual_forensics, analysis.file_paths);
+            updateCyberThreats(analyses.cyber_threats);
+            updateMetadata(analyses.metadata);
+            updateAudit(analyses.semantic_audit);
+            updateAiDetection(analyses.ai_detection);
+        }
+        
+        function updateScoreGauge(score) {
+            const arc = document.getElementById('scoreArc');
+            const circumference = 2 * Math.PI * 45; 
+            const offset = circumference - (score / 100) * circumference;
+            arc.style.strokeDashoffset = offset;
+            
+            document.getElementById('scoreValue').innerHTML = `${score}<span class="text-lg">%</span>`;
+            document.getElementById('scanStatus').textContent = 'COMPLETED';
+            document.getElementById('scanStatus').classList.remove('text-primary');
+            
+            const category = document.getElementById('scoreCategory');
+            category.classList.remove('hidden');
+            
+            if (score >= 85) {
+                category.textContent = 'VERIFIED AUTHENTIC';
+                category.className = 'mt-2 font-label-caps text-[11px] px-3 py-1.5 rounded uppercase tracking-wider bg-secondary/10 text-secondary border border-secondary/20 shadow-[0_0_10px_rgba(77,224,130,0.2)]';
+                arc.setAttribute('class', 'text-secondary transition-all duration-1000');
+            } else if (score >= 50) {
+                category.textContent = 'SUSPICIOUS / REVIEW';
+                category.className = 'mt-2 font-label-caps text-[11px] px-3 py-1.5 rounded uppercase tracking-wider bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 shadow-[0_0_10px_rgba(234,179,8,0.2)]';
+                arc.setAttribute('class', 'text-yellow-500 transition-all duration-1000');
+            } else {
+                category.textContent = 'TAMPERED / MALICIOUS';
+                category.className = 'mt-2 font-label-caps text-[11px] px-3 py-1.5 rounded uppercase tracking-wider bg-error/10 text-error border border-error/20 shadow-[0_0_10px_rgba(255,180,171,0.2)]';
+                arc.setAttribute('class', 'text-error transition-all duration-1000');
+            }
+        }
+        
+        function updateExecutiveSummary(summary) {
+            const container = document.getElementById('executiveSummary');
+            if(summary && Array.isArray(summary) && summary.length > 0) {
+                container.innerHTML = summary.map(point => {
+                    let icon = 'info';
+                    let color = 'text-primary';
+                    if(point.includes('⚠️')) { icon = 'warning'; color = 'text-yellow-500'; }
+                    if(point.includes('✓')) { icon = 'check_circle'; color = 'text-secondary'; }
+                    const cleanPoint = point.replace(/[⚠️✓ℹ️]/g, '');
+                    return `<div class="flex items-start gap-2 mb-2"><span class="material-symbols-outlined ${color} text-[18px] shrink-0 mt-0.5">${icon}</span> <span>${cleanPoint}</span></div>`;
+                }).join('');
+            } else {
+                container.innerHTML = '<p>No summary generated.</p>';
+            }
+        }
+        
+        function updateVisualComparison(visualResult, filePaths) {
+            if (!visualResult || !visualResult.success) {
+                document.getElementById('elaDetailsCard').style.display = 'none';
+                return;
+            }
+            
+            const originalImage = document.getElementById('originalImage');
+            const elaImage = document.getElementById('elaImage');
+            
+            if (filePaths && filePaths.original_image) {
+                originalImage.src = filePaths.original_image;
+                originalImage.style.display = 'block';
+                document.getElementById('noImageMessage').style.display = 'none';
+            } else {
+                originalImage.style.display = 'none';
+                document.getElementById('noImageMessage').style.display = 'flex';
+            }
+            
+            if (filePaths && filePaths.ela_heatmap) {
+                elaImage.src = filePaths.ela_heatmap;
+                elaImage.style.display = 'block';
+                document.getElementById('noELAMessage').style.display = 'none';
+            } else {
+                elaImage.style.display = 'none';
+                document.getElementById('noELAMessage').style.display = 'flex';
+            }
+            
+            if (visualResult.high_variance_regions !== undefined) {
+                const elaCard = document.getElementById('elaDetailsCard');
+                elaCard.style.display = 'block';
+                
+                let details = `<p><span class="text-on-surface">High-Variance Regions:</span> ${visualResult.high_variance_regions}</p>`;
+                if (visualResult.tampering_confidence !== undefined) {
+                    details += `<p><span class="text-on-surface">Tampering Confidence:</span> ${visualResult.tampering_confidence.toFixed(1)}%</p>`;
+                }
+                
+                if (visualResult.bounding_boxes && Array.isArray(visualResult.bounding_boxes) && visualResult.bounding_boxes.length > 0) {
+                    details += '<p class="mt-2 text-on-surface">Flagged Regions:</p><ul class="list-disc pl-5 mt-1">';
+                    visualResult.bounding_boxes.slice(0, 5).forEach((bbox, i) => {
+                        details += `<li>Region ${i+1}: ${bbox.confidence.toFixed(1)}% confidence, ${bbox.area_percentage.toFixed(2)}% of image</li>`;
+                    });
+                    details += '</ul>';
+                }
+                document.getElementById('elaDetails').innerHTML = details;
+            }
+        }
+        
+        function updateCyberThreats(cyberResult) {
+            const container = document.getElementById('threatsContent');
+            if(!cyberResult) {
+                container.innerHTML = '<p class="text-outline italic">Cyber analysis data unavailable.</p>';
+                return;
+            }
+            
+            if (cyberResult.is_clean) {
+                container.innerHTML = '<div class="p-4 bg-secondary/10 border border-secondary/20 text-secondary rounded flex items-center gap-2"><span class="material-symbols-outlined">check_circle</span> No malicious payloads detected</div>';
+                return;
+            }
+            
+            let html = `<p class="mb-4 text-lg">Threat Level: <span class="font-bold text-error uppercase">${cyberResult.threat_level || 'UNKNOWN'}</span></p>`;
+            if(cyberResult.threats_detected && Array.isArray(cyberResult.threats_detected)) {
+                cyberResult.threats_detected.forEach(threat => {
+                    let styling = threat.severity === 'CRITICAL' ? 'bg-error/10 border-error/30 text-error' : 
+                                 (threat.severity === 'MEDIUM' ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-500' : 'bg-primary/10 border-primary/30 text-primary');
+                    
+                    html += `<div class="p-4 mb-3 border rounded-lg ${styling}">
+                        <div class="font-bold mb-1 flex justify-between"><span>${threat.type}</span> <span class="text-[10px] uppercase border px-1 rounded">${threat.severity}</span></div>
+                        <div class="text-on-surface-variant text-[12px] mb-1">${threat.description}</div>
+                        <div class="text-outline text-xs mt-2 font-mono break-all">${threat.location}</div>
+                    </div>`;
+                });
+            }
+            container.innerHTML = html;
+        }
+        
+        function updateMetadata(metadataResult) {
+            const container = document.getElementById('metadataContent');
+            let html = '';
+            
+            if(!metadataResult) {
+                container.innerHTML = '<p class="text-outline italic">Metadata unavailable.</p>';
+                return;
+            }
+            
+            if (metadataResult.software_detected && metadataResult.software_detected.length) {
+                html += `<p><strong class="text-on-surface">Editing Software:</strong> ${metadataResult.software_detected.join(', ')}</p>`;
+            }
+            if (metadataResult.creation_date && metadataResult.creation_date !== "None") {
+                html += `<p><strong class="text-on-surface">Creation Date:</strong> ${metadataResult.creation_date}</p>`;
+            }
+            if (metadataResult.modification_date && metadataResult.modification_date !== "None") {
+                html += `<p><strong class="text-on-surface">Modification Date:</strong> ${metadataResult.modification_date}</p>`;
+            }
+            if (metadataResult.editing_history) {
+                html += `<p><strong class="text-on-surface">Editing History:</strong> ${metadataResult.editing_history}</p>`;
+            }
+            if (metadataResult.metadata && Object.keys(metadataResult.metadata).length > 0) {
+                html += '<p class="mt-4"><strong class="text-on-surface">Raw Metadata Extracted:</strong></p><pre class="bg-black/50 p-4 rounded-lg border border-white/5 overflow-x-auto mt-2 text-primary/80">';
+                Object.entries(metadataResult.metadata).slice(0, 15).forEach(([key, value]) => {
+                    html += `${key}: ${value}\n`;
+                });
+                html += '</pre>';
+            }
+            
+            container.innerHTML = html || '<p class="text-outline italic">No metadata available for this file type.</p>';
+        }
+        
+        function updateAudit(auditResult) {
+            const container = document.getElementById('auditContent');
+            if(!auditResult) {
+                container.innerHTML = '<p class="text-outline italic">Audit data unavailable.</p>';
+                return;
+            }
+            
+            if (!auditResult.success) {
+                container.innerHTML = '<p class="text-outline italic">OCR mathematical audit could not complete or text extraction failed.</p>';
+                return;
+            }
+            
+            let statusColor = auditResult.audit_status === 'PASSED' ? 'text-secondary' : 'text-error';
+            let html = `<div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <p class="text-lg">Audit Status: <span class="font-bold ${statusColor}">${auditResult.audit_status}</span></p>
+                <p class="bg-surface-container py-1 px-3 rounded border border-white/5">OCR Confidence: ${(auditResult.confidence_score || 0).toFixed(1)}%</p>
+            </div>`;
+            
+            if (auditResult.numerical_values) {
+                html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">';
+                const nums = auditResult.numerical_values;
+                if (nums.monetary_values && nums.monetary_values.length) {
+                    html += `<div class="p-3 bg-black/30 rounded border border-white/5"><span class="text-primary block mb-1">Monetary Variables Detected</span> ${nums.monetary_values.map(n => '$' + (n || 0).toFixed(2)).join(', ')}</div>`;
+                }
+                if (nums.academic_values && nums.academic_values.length) {
+                    html += `<div class="p-3 bg-black/30 rounded border border-white/5"><span class="text-primary block mb-1">Academic Variables Detected</span> ${nums.academic_values.join(', ')}</div>`;
+                }
+                html += '</div>';
+            }
+            
+            if (auditResult.inconsistencies && auditResult.inconsistencies.length > 0) {
+                html += '<p class="text-error font-bold mb-2">Inconsistencies Found:</p>';
+                auditResult.inconsistencies.forEach(item => {
+                    html += `<div class="p-3 mb-2 bg-error/10 border-l-2 border-error rounded text-on-surface">
+                        <div class="font-bold text-error mb-1">${item.type}</div>
+                        <div class="text-sm">${item.description}</div>
+                    </div>`;
+                });
+            } else if (auditResult.inconsistency_count === 0) {
+                html += '<div class="p-4 bg-secondary/10 border border-secondary/20 text-secondary rounded flex items-center gap-2"><span class="material-symbols-outlined">calculate</span> All numerical calculations cross-checked successfully</div>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function updateAiDetection(aiResult) {
+            const container = document.getElementById('aiContent');
+            
+            
+            if(!aiResult || !aiResult.success) {
+                container.innerHTML = '<p class="text-outline italic">AI Analysis Module is either not installed or could not complete.</p>';
+                return;
+            }
+            
+            let statusColor = aiResult.is_ai_generated ? 'text-error' : 'text-secondary';
+            let statusText = aiResult.is_ai_generated ? 'SYNTHETIC CONTENT DETECTED' : 'ORGANIC / HUMAN GENERATED';
+            
+            let html = `<div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <p class="text-lg">AI Status: <span class="font-bold ${statusColor}">${statusText}</span></p>
+                <p class="bg-surface-container py-1 px-3 rounded border border-white/5">Confidence: ${aiResult.overall_ai_probability.toFixed(1)}%</p>
+            </div><div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+            
+            if (aiResult.text_analysis && aiResult.text_analysis.analyzed) {
+                let txtColor = aiResult.text_analysis.ai_detected ? 'border-error text-error bg-error/10' : 'border-secondary text-secondary bg-secondary/10';
+                html += `<div class="p-4 rounded border-l-4 ${txtColor}">
+                    <p class="font-bold mb-2 uppercase tracking-wider">Text Analysis</p>
+                    <p class="text-on-surface-variant text-[11px] mb-1">Perplexity & Burstiness Variance</p>
+                    <p class="font-mono mt-2 text-[12px]">Burstiness Score: ${aiResult.text_analysis.burstiness.toFixed(3)}</p>
+                </div>`;
+            }
+            
+            if (aiResult.image_analysis && aiResult.image_analysis.analyzed) {
+                let imgColor = aiResult.image_analysis.ai_detected ? 'border-error text-error bg-error/10' : 'border-secondary text-secondary bg-secondary/10';
+                html += `<div class="p-4 rounded border-l-4 ${imgColor}">
+                    <p class="font-bold mb-2 uppercase tracking-wider">Image Analysis</p>
+                    <p class="text-on-surface-variant text-[11px] mb-1">Fast Fourier Transform Artifacts</p>
+                    <p class="font-mono mt-2 text-[12px]">High-Freq Noise Ratio: ${aiResult.image_analysis.high_freq_ratio.toFixed(3)}</p>
+                </div>`;
+            }
+            
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                
+                document.querySelectorAll('.tab-button').forEach(b => {
+                    b.className = 'tab-button px-6 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 font-label-caps text-[11px] uppercase transition-colors border border-transparent';
+                });
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                
+                
+                const target = e.target.getAttribute('data-target');
+                e.target.className = 'tab-button active px-6 py-2 rounded-md bg-primary/10 border border-primary/30 text-primary font-label-caps text-[11px] uppercase shadow-[0_0_10px_rgba(34,211,238,0.1)] transition-colors';
+                document.getElementById(target).classList.remove('hidden');
+            });
+        });
+
+        
+        function showError(msg) {
+            errorBox.textContent = msg;
+            errorBox.classList.remove('hidden');
+        }
+        
+        function hideError() {
+            errorBox.classList.add('hidden');
+        }
+        
+        
+        document.getElementById('exportJsonBtn').addEventListener('click', () => {
+            if (currentAnalysis) {
+                const blob = new Blob([JSON.stringify(currentAnalysis, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `DocuVerify_Report_${new Date().getTime()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        });
+    </script>
+</body>
+</html>
